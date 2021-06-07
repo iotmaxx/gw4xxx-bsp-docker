@@ -3,7 +3,7 @@ Creates Docker image with build system for IoTmaxx GW4xxx series board support p
 
 Please use the following commands to build and run the docker container:
 ```
-docker build -t iotmaxx_bsp
+docker build -t iotmaxx_bsp .
 docker run -it --security-opt seccomp=unconfined iotmaxx_bsp
 ```
 
