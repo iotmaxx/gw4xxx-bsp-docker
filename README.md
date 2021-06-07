@@ -1,5 +1,5 @@
 # gw4xxx-bsp-docker
-Creates Docker image with build system for IoTmaxx GW4xxx series Board Support Package 
+Creates Docker image with build system for IoTmaxx GW4xxx series board support package 
 
 Please use the following commands to build and run the docker container:
 ```
