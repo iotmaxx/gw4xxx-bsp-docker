@@ -1,8 +1,12 @@
 # gw4xxx-bsp-docker
-IoTmaxx GW4xxx series Board Support Package Docker 
+Creates Docker image with build system for IoTmaxx GW4xxx series Board Support Package 
 
+Please use the following commands to build and run the docker container:
+'''
 docker build -t iotmaxx_bsp
-
 docker run -it --security-opt seccomp=unconfined iotmaxx_bsp
+'''
 
+For instructions on how to install the actual board support package please contact 
+[IoTmaxx support](mailto:support@iotmaxx.de?subject=[BSP] Request%20for%20installation%20instructions)
 
