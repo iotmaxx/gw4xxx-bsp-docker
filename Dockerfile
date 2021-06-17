@@ -1,6 +1,6 @@
 FROM ubuntu:focal
 
-ARG PTXDIST_VERSION=2021.05.0
+ARG PTXDIST_VERSION=2021.06.0
 ARG PTXDIST_VERSION_TOOLCHAIN=2019.09.0
 ARG OSELAS_TOOLCHAIN_VERSION=2019.09.1
 ARG OSELAS_TOOLCHAIN_VERSION_GIT=v$OSELAS_TOOLCHAIN_VERSION
@@ -37,7 +37,8 @@ RUN apt-get install -o='Acquire::https::debian.pengutronix.de::Verify-Peer=false
 #	oselas.toolchain-2019.09.1-arm-v7a-linux-gnueabihf-gcc-10.2.1-clang-10.0.1-glibc-2.32-binutils-2.35-kernel-5.8-sanitized \
 	oselas.toolchain-2019.09.1-arm-v7a-linux-gnueabihf-gcc-9.2.1-clang-8.0.1-glibc-2.30-binutils-2.32-kernel-5.0-sanitized \
 	&& apt clean
-
+# for building the ptxdist PDF documentation
+#RUN apt-get -y -qq install latexmk texlive-xetex texlive-fonts-extra
 #create new user without password
 RUN adduser $USER sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
@@ -47,14 +48,14 @@ USER ptx
 
 RUN mkdir -p /home/ptx/local && \
         cd /home/ptx/local && \
-	wget https://public.pengutronix.de/software/ptxdist/ptxdist-2021.05.0.tar.bz2 && \
-	tar -xjf ptxdist-2021.05.0.tar.bz2 && \
-	cd ptxdist-2021.05.0 && \
+	wget https://public.pengutronix.de/software/ptxdist/ptxdist-${PTXDIST_VERSION}.tar.bz2 && \
+	tar -xjf ptxdist-${PTXDIST_VERSION}.tar.bz2 && \
+	cd ptxdist-${PTXDIST_VERSION} && \
 	./configure && \
 	make && \
 	sudo make install
 
-COPY expat.make /usr/local/lib/ptxdist-2021.05.0/rules/
+#COPY expat.make /usr/local/lib/ptxdist-2021.05.0/rules/
 #RUN cd /home/ptx/ && \
 #  git clone git://git.pengutronix.de/DistroKit
 
