@@ -1,8 +1,8 @@
-FROM ubuntu:focal
+FROM debian:bullseye
 
-ARG PTXDIST_VERSION=2021.06.0
-ARG PTXDIST_VERSION_TOOLCHAIN=2019.09.0
-ARG OSELAS_TOOLCHAIN_VERSION=2019.09.1
+ARG PTXDIST_VERSION=2022.04.0
+ARG PTXDIST_VERSION_TOOLCHAIN=2021.07.0
+ARG OSELAS_TOOLCHAIN_VERSION=2021.07.0
 ARG OSELAS_TOOLCHAIN_VERSION_GIT=v$OSELAS_TOOLCHAIN_VERSION
 ARG USER=ptx
 ARG UID=1000
@@ -15,28 +15,37 @@ RUN useradd -d /home/ptx -m ${USER} --uid=${UID} && echo "${USER}:${PW}" | \
       chpasswd
 #RUN export DEBIAN_FRONTEND=noninteractive
 # add pengutronix repository
-RUN echo 'deb [trusted=yes] https://debian.pengutronix.de/debian/ focal main contrib non-free' > /etc/apt/sources.list.d/pengutronix.list
-#RUN apt -o="Acquire::AllowInsecureRepositories=true" update
-RUN apt-get -o='Acquire::https::debian.pengutronix.de::Verify-Peer=false' update
-#RUN apt-get update
-RUN apt-get install -o='Acquire::https::debian.pengutronix.de::Verify-Peer=false' -y -qq pengutronix-archive-keyring
+##RUN echo 'deb [trusted=yes] https://debian.pengutronix.de/debian/ bullseye main contrib non-free' > /etc/apt/sources.list.d/pengutronix.list
+##RUN apt -o="Acquire::AllowInsecureRepositories=true" update
+#RUN apt-get -o='Acquire::https::debian.pengutronix.de::Verify-Peer=false' update
+RUN apt-get update
+##RUN apt-get install -o='Acquire::https::debian.pengutronix.de::Verify-Peer=false' -y -qq pengutronix-archive-keyring
 #Install all necessary packages
 RUN DEBIAN_FRONTEND=noninteractive TZ="Europe/Berlin" apt-get install -y tzdata
-RUN apt-get install -o='Acquire::https::debian.pengutronix.de::Verify-Peer=false' -y -qq \
+RUN apt-get install -y -qq \
 	gcc \
 	pkg-config \
 	libncurses-dev \
 	gawk flex bison texinfo make file \
 	gettext patch python3-dev python3-setuptools unzip bc wget \
-#	python-pip \
-	python3-pip \
-	python3-sphinx \
-	nano less git \
-	ncurses-dev \
-	sudo \
+	python3-pip python3-sphinx \
+	nano less git ncurses-dev sudo \
+##	oselas.toolchain-2021.07-arm-v7a-linux-gnueabi \
 #	oselas.toolchain-2019.09.1-arm-v7a-linux-gnueabihf-gcc-10.2.1-clang-10.0.1-glibc-2.32-binutils-2.35-kernel-5.8-sanitized \
-	oselas.toolchain-2019.09.1-arm-v7a-linux-gnueabihf-gcc-9.2.1-clang-8.0.1-glibc-2.30-binutils-2.32-kernel-5.0-sanitized \
+#	oselas.toolchain-2019.09.1-arm-v7a-linux-gnueabihf-gcc-9.2.1-clang-8.0.1-glibc-2.30-binutils-2.32-kernel-5.0-sanitized \
 	&& apt clean
+
+# add pengutronix repository
+RUN echo 'deb [trusted=yes] https://debian.pengutronix.de/debian/ bullseye main contrib non-free' > /etc/apt/sources.list.d/pengutronix.list
+RUN apt -o="Acquire::AllowInsecureRepositories=true" update
+RUN apt-get install -o='Acquire::https::debian.pengutronix.de::Verify-Peer=false' -y -qq pengutronix-archive-keyring
+RUN apt -o="Acquire::AllowInsecureRepositories=true" update
+RUN apt-get install -o='Acquire::https::debian.pengutronix.de::Verify-Peer=false' -y -qq \
+        oselas.toolchain-2021.07-arm-v7a-linux-gnueabihf \
+#       oselas.toolchain-2019.09.1-arm-v7a-linux-gnueabihf-gcc-10.2.1-clang-10.0.1-glibc-2.32-binutils-2.35-kernel-5.8-sanitized \
+#       oselas.toolchain-2019.09.1-arm-v7a-linux-gnueabihf-gcc-9.2.1-clang-8.0.1-glibc-2.30-binutils-2.32-kernel-5.0-sanitized \
+        && apt clean
+
 # for building the ptxdist PDF documentation
 #RUN apt-get -y -qq install latexmk texlive-xetex texlive-fonts-extra
 #create new user without password
