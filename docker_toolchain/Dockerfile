@@ -130,7 +130,7 @@ RUN mkdir -p "${JENKINS_AGENT_HOME}"/local && \
 
 EXPOSE 22
 
-ENTRYPOINT ["setup-sshd"]
+#ENTRYPOINT ["setup-sshd"]
 
 #COPY expat.make /usr/local/lib/ptxdist-2021.05.0/rules/
 #RUN cd /home/ptx/ && \
