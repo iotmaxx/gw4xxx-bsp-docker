@@ -1,0 +1,37 @@
+version: '3'
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    privileged: true
+    user: root
+    ports:
+      - 18080:8080
+      - 50000:50000
+    container_name: jenkins
+    volumes:
+      - /usr/bin/docker:/usr/bin/docker
+      - /iotmaxx/jenkins_home/:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+  agent:
+    image: jenkins/ssh-agent:jdk11
+    privileged: true
+    user: root
+    container_name: agent
+    expose:
+      - 22
+    environment:
+      - JENKINS_AGENT_SSH_PUBKEY=
+  bsp_agent:
+    image: iotmaxx/build_agent:1.0
+    privileged: true
+    user: jenkins
+    entrypoint:
+      - sudo
+      - -E
+      - setup-sshd
+    container_name: bsp_agent
+    expose:
+      - 22
+    environment:
+      - JENKINS_AGENT_SSH_PUBKEY=
+
