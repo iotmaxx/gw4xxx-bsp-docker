@@ -7,10 +7,10 @@ services:
     ports:
       - 18080:8080
       - 50000:50000
-    container_name: jenkins
+    container_name: jenkinsci
     volumes:
       - /usr/bin/docker:/usr/bin/docker
-      - /iotmaxx/jenkins_home/:/var/jenkins_home
+#      - /iotmaxx/jenkins_home/:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
   agent:
     image: jenkins/ssh-agent:jdk11
