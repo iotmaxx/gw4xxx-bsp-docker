@@ -31,7 +31,7 @@ RUN apt-get install -y -qq \
 	gettext patch python3-dev python3-setuptools unzip bc wget \
 	python3-pip python3-sphinx \
 	nano less git ncurses-dev sudo \
-	python3.11-venv moreutils \
+	python3.11-venv moreutils jq \
 ##	oselas.toolchain-2021.07-arm-v7a-linux-gnueabi \
 #	oselas.toolchain-2019.09.1-arm-v7a-linux-gnueabihf-gcc-10.2.1-clang-10.0.1-glibc-2.32-binutils-2.35-kernel-5.8-sanitized \
 #	oselas.toolchain-2019.09.1-arm-v7a-linux-gnueabihf-gcc-9.2.1-clang-8.0.1-glibc-2.30-binutils-2.32-kernel-5.0-sanitized \
